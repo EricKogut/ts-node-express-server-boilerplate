@@ -1,7 +1,6 @@
 import { Router, Request, Response } from "express";
-import { User } from "../models/User.model";
 const userHandler = require("../handlers/user.handler.ts");
-const utils = require("../utils/auth/authUtils");
+const authUtils = require("../utils/auth/authUtils");
 
 export const userRouter = () => {
   const router = Router();
@@ -13,10 +12,18 @@ export const userRouter = () => {
   });
 
   router.post("/register", function (req, res, next) {
-    userHandler.handleUser("register", "data");
-    return res
-      .status(200)
-      .json({ response: "You have just hit the hello endpoint" });
+    userHandler
+      .handleUser("register", {
+        email: "eric@gmail.com",
+        username: "eric",
+        password: "eric",
+      })
+      .then((response: String) => {
+        return res
+          .status(200)
+          .json({ response: "You have just hit the hello endpoint" });
+      })
+      .catch((error: String) => console.log(error, "error has occured"));
   });
 
   return router;
