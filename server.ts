@@ -2,21 +2,33 @@
 // Importing deps
 require('dotenv').config();
 const express = require('express');
-import { Router, Request, Response } from 'express';
-var cors = require('cors');
+import { Router, Request, Response, NextFunction } from "express";
+var cors = require("cors");
 
 // Declaring mongo database
-import { connectDB } from './db';
+import { connectDB } from "./db";
 
 // Declaring app and port
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Creating DB Connection
-connectDB();
+// Adding logging for request
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log(req.method + " request for " + req.url);
+});
 
 // Starting express server
 app.listen(port, () => console.log(`Server running on port ${port}`));
+
+///////////////////////////
+/* Routes */
+import { userRouter } from "./routes/user.routes";
+// Mounting middleware to app
+app.use("/user", userRouter());
+///////////////////////////
+
+// Creating DB Connection
+connectDB();
 
  // Default display
 app.get('/', (req: Request, res: Response) =>
