@@ -1,10 +1,13 @@
 const authUtils = require("../utils/auth/authUtils");
 import { User } from "../models/User.model";
+const { body } = require("express-validator/check");
 
 function handleUser(endpoint: String, body: Object) {
   switch (endpoint) {
     case "register":
       return handleUserRegistration(body);
+    case "login":
+      return handleUserLogin(body);
   }
   return null;
 }
@@ -55,6 +58,55 @@ function handleUserRegistration(data: any) {
         }
       }
     });
+  });
+}
+
+function handleUserLogin(data: any) {
+  return new Promise(function (resolve, reject) {
+    //Taking the username recieved from the login
+    User.findOne({ username: data.username })
+      .then((user) => {
+        //Assuming we didnt find it, then return false (maybe not registers)
+        if (!user) {
+          resolve({ status: 401, response: "could not find user" });
+        }
+
+        //Otherwise, if it does exist, it uses util to verify the validity of the login
+        // Function defined at bottom of app.js
+        const isValid = authUtils.validPassword(
+          data.password,
+          user!.password,
+          user!.salt
+        );
+
+        //If the user logged in succesfully
+        if (isValid) {
+          //Give it a token to attach to future requests
+          const tokenObject = authUtils.issueJWT(user);
+          console.log(tokenObject.expires, "is when it expires");
+          //Attach it to the request
+          resolve({
+            status: 401,
+            response: {
+              success: true,
+              token: tokenObject.token,
+              expiresIn: tokenObject.expires,
+              email: data.username,
+              hash: user!.password,
+            },
+          });
+        }
+
+        //If the user give a wrong password
+        else {
+          resolve({ status: 401, response: "wrong passwoprd" });
+        }
+      })
+
+      //Catching any errors with the
+      .catch((err) => {
+        reject(err);
+      });
   });
 }
 
