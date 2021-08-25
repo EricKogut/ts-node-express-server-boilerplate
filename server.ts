@@ -22,7 +22,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Starting express server
-app.listen(port, () => console.log(`Server running on port ${port}`));
+const server = app.listen(port, () =>
+  console.log(`Server running on port ${port}`)
+);
 
 ///////////////////////////
 /* Routes */
@@ -34,8 +36,9 @@ app.use("/user", userRouter());
 // Creating DB Connection
 connectDB();
 
- // Default display
-app.get('/', (req: Request, res: Response) =>
-  res.sendFile(__dirname + '/index.html')
+// Default display
+app.get("/", (req: Request, res: Response) =>
+  res.sendFile(__dirname + "/index.html")
 );
- 
+
+module.exports = server;
