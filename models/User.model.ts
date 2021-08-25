@@ -2,8 +2,6 @@ import { Schema, Model, model } from "mongoose";
 
 interface UserDocument {
   username: string;
-  first_name: string;
-  last_name: string;
   password: string;
   salt: string;
   email: string;
@@ -14,8 +12,6 @@ interface UserDocument {
 const UserSchema = new Schema(
   {
     username: { type: Schema.Types.String, required: true, unique: true },
-    first_name: { type: Schema.Types.String, required: true, unique: true },
-    last_name: { type: Schema.Types.String, required: true, unique: true },
     password: { type: Schema.Types.String, required: true },
     salt: { type: Schema.Types.String, required: true },
     email: { type: Schema.Types.String, required: true, unique: true },

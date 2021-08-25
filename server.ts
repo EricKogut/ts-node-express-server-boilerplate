@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 // Adding logging for request
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(req.method + " request for " + req.url);
+  next();
 });
 
 // Starting express server
