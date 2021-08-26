@@ -1,5 +1,4 @@
 {
-  "name": "twitter-backend-clone",
   "version": "1.0.0",
   "description": "This will be the list of deps required to run this server.",
   "main": "server.ts",

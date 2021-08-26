@@ -7,7 +7,7 @@ const requestWithSupertest = supertest(server);
 var rug = require("random-username-generator");
 var new_username = rug.generate();
 
-describe("Register and Login test", () => {1
+describe("Register and Login test", () => {
   let username = rug.generate();
   const testUser = {
     email: username + "@" + "mail.com",
@@ -16,7 +16,9 @@ describe("Register and Login test", () => {1
   };
 
   it("Will register a new user", async () => {
-    const res = await requestWithSupertest.post("/user/register").send(testUser);
+    const res = await requestWithSupertest
+      .post("/user/register")
+      .send(testUser);
     expect(res.status).toEqual(200);
   });
 

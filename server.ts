@@ -12,8 +12,6 @@ import { connectDB } from "./db";
 const app = express();
 const port = process.env.PORT || 5000;
 
-
-require("./models/User.model.ts");
 ///////////////////////////
 /* Routes */
 import { userRouter } from "./routes/user.routes";
@@ -24,6 +22,7 @@ app.use("/user", userRouter());
 //Adding middleware for requests
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 // Adding logging for request
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(req.method + " request for " + req.url);
@@ -34,7 +33,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 const server = app.listen(port, () =>
   console.log(`Server running on port ${port}`)
 );
-
 
 // Creating DB Connection
 connectDB();

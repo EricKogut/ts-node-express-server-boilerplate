@@ -27,7 +27,7 @@ export const userRouter = () => {
 
   router.post("/login", function (req, res, next) {
     userHandler
-      .handleUser("login", { username: "eric", password: "eric" })
+      .handleUser("login", req.body)
       .then((response: String) => {
         return res.status(200).json({ response: response });
       })

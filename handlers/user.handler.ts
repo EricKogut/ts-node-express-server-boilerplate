@@ -1,6 +1,9 @@
 const authUtils = require("../utils/auth/authUtils");
 import { User } from "../models/User.model";
 
+// TODO: Add input verification!!!
+// Currently being sanitized, but not verified :/
+
 function handleUser(endpoint: String, body: Object) {
   switch (endpoint) {
     case "register":
