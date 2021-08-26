@@ -1,6 +1,5 @@
 const authUtils = require("../utils/auth/authUtils");
 import { User } from "../models/User.model";
-const { body } = require("express-validator/check");
 
 function handleUser(endpoint: String, body: Object) {
   switch (endpoint) {
@@ -109,5 +108,7 @@ function handleUserLogin(data: any) {
       });
   });
 }
+
+
 
 module.exports.handleUser = handleUser;

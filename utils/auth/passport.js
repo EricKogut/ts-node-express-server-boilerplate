@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
-const User = require('mongoose').model('User');
+const  User = require("../../models/User.model");
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
-const pathToKey = path.join('id_rsa_pub.pem');
+const pathToKey = path.resolve(__dirname+'/id_rsa_pub.pem');
 const PUB_KEY = fs.readFileSync(pathToKey, 'utf8');
 
 //////////////////////
@@ -31,23 +31,25 @@ const strategy = new JwtStrategy(options, (payload, done) =>{
     //Here we can use any database, or any code logiuc
   //Since we are usign mongo, we use find one
   // We will assign the `sub` property on the JWT to the database ID of user
-  User.findOne({_id: payload.sub})
-  //Using promise
-  .then
-  ((user)=>{
-    //Since we know that the  JWT is valid, we need to see if we have found a user in the database
-    if(user){
-      return done(null, user)
-    }
-    //If we don't find a user
-    else{
-      return (null, false)
-    }
-    /////NOTE: passport expects to see either a user object or false
+  // User.findOne({_id: payload.sub})
+  // //Using promise
+  // .then
+  // ((user)=>{
+  //   //Since we know that the  JWT is valid, we need to see if we have found a user in the database
+  //   if(user){
+  //     return done(null, user)
+  //   }
+  //   //If we don't find a user
+  //   else{
+  //     return (null, false)
+  //   }
+  //   /////NOTE: passport expects to see either a user object or false
 
 
-  })
-  .catch(err => done(err, null))
+  // })
+  // .catch(err => done(err, null))
+
+  return done(null, {"yeet":"yeet"})
 
 });
 

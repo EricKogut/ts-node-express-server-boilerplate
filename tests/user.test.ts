@@ -3,21 +3,26 @@ const server = require("../server.ts");
 const supertest = require("supertest");
 const requestWithSupertest = supertest(server);
 
-describe("/", () => {
-  it("GET /user should show all users", async () => {
-    const res = await requestWithSupertest.get("/user/hello");
+// Will be used to generate usernames
+var rug = require("random-username-generator");
+var new_username = rug.generate();
+
+describe("Register and Login test", () => {1
+  let username = rug.generate();
+  const testUser = {
+    email: username + "@" + "mail.com",
+    username: username,
+    password: username,
+  };
+
+  it("Will register a new user", async () => {
+    const res = await requestWithSupertest.post("/user/register").send(testUser);
     expect(res.status).toEqual(200);
-    expect(res.type).toEqual(expect.stringContaining("json"));
-    expect(res.body).toHaveProperty("users");
+  });
+
+  it("Will login an existing user", async () => {
+    const res = await requestWithSupertest.post("/user/login").send(testUser);
+    expect(res.status).toEqual(200);
   });
 });
 
-describe("loading express", function () {
-  var server;
-  beforeEach(function () {
-    server = require("../server.ts");
-  });
-  it("responds to /", function testSlash(done) {
-    supertest(server).get("/user/hello").expect(200, done);
-  });
-});
