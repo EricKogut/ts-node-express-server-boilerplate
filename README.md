@@ -12,7 +12,7 @@ This will serve as a boilerplate for any future projects with a ME(jsLibrary)N s
 |----------------|-------------------------------|-----------------------------|
 | For login|`localhost:5000/user/login`            | body:{username:, password:}           |
 |For signup          |`localhost:5000/user/register`            |body:{username:, email:, password:}         |
-|For checking token          |`localhost:5000/authorized`|header:{Authorization:"token STRING returned from login"}|
+|For checking token          |`localhost:5000/user/authorized`|header:{Authorization:"token STRING returned from login"}|
 
 ---
 
