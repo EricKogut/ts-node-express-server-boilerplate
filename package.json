@@ -26,7 +26,7 @@
     "supertest": "^6.1.6"
   },
   "scripts": {
-    "hireEric": "nodemon server.ts --useChildProcesses",
+    "hireEric": "ts-node server.ts --useChildProcesses",
     "test": "jest"
   },
   "ts-jest": {
