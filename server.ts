@@ -1,7 +1,6 @@
-
 // Importing deps
-require('dotenv').config();
-const express = require('express');
+require("dotenv").config();
+const express = require("express");
 import { Router, Request, Response, NextFunction } from "express";
 const bodyParser = require("body-parser");
 
