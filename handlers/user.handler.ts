@@ -39,7 +39,11 @@ function handleUserRegistration(data: any) {
     //Making sure user does not exist and if so new result is created
     User.findOne({ username: inputUsername }).then((result) => {
       if (result) {
-        reject("User already exists");
+        resolve({
+          status: 401,
+          success: false,
+          message: "User already exists",
+        });
       } else {
         try {
           newUser.save().then((user) => {
@@ -49,6 +53,7 @@ function handleUserRegistration(data: any) {
             //This returns an object with token and expireIn
 
             resolve({
+              status: 200,
               success: true,
               user: user,
               token: jwt.token,
@@ -56,7 +61,11 @@ function handleUserRegistration(data: any) {
             });
           });
         } catch (err) {
-          reject(err);
+          reject({
+            status: 500,
+            success: false,
+            message: err,
+          });
         }
       }
     });
@@ -71,6 +80,7 @@ function handleUserLogin(data: any) {
         //Assuming we didnt find it, then return false (maybe not registers)
         if (!user) {
           resolve({ status: 401, response: "could not find user" });
+          console.log("cOULD NOT FIND USER");
         }
 
         //Otherwise, if it does exist, it uses util to verify the validity of the login
@@ -88,7 +98,7 @@ function handleUserLogin(data: any) {
           console.log(tokenObject.expires, "is when it expires");
           //Attach it to the request
           resolve({
-            status: 401,
+            status: 200,
             response: {
               success: true,
               token: tokenObject.token,
@@ -111,7 +121,5 @@ function handleUserLogin(data: any) {
       });
   });
 }
-
-
 
 module.exports.handleUser = handleUser;
