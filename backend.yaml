@@ -1,0 +1,7 @@
+runtime: nodejs14
+service: backend
+
+env_variables:
+  GCLOUD_STORAGE_BUCKET: 
+  MONGO_DB_CLUSTER:
+  GOOGLE_CLOUD_PROJECT:
